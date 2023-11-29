@@ -364,17 +364,17 @@ class VideoPlayer {
   bool canPlayHlsNatively() {
     bool canPlayHls = false;
     try {
-      final String canPlayType = _videoElement.canPlayType('application/vnd.apple.mpegurl');
-      canPlayHls =
-          canPlayType != '';
+      final String canPlayType =
+          _videoElement.canPlayType('application/vnd.apple.mpegurl');
+      canPlayHls = canPlayType != '';
     } catch (e) {}
     return canPlayHls;
   }
 
   Future<bool> shouldUseHlsLibrary() async {
-    return useNativeHls != true && isSupported() &&
-        (uri.toString().contains('m3u8') || await _testIfM3u8()) &&
-        !canPlayHlsNatively();
+    return (useNativeHls == false || !canPlayHlsNatively()) &&
+        isSupported() &&
+        (uri.toString().contains('m3u8') || await _testIfM3u8());
   }
 
   Future<bool> _testIfM3u8() async {
