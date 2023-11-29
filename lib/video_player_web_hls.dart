@@ -21,6 +21,10 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
     VideoPlayerPlatform.instance = VideoPlayerPluginHls();
   }
 
+  VideoPlayerPluginHls({this.useNativeHls});
+
+  final bool? useNativeHls;
+
   // Map of textureId -> VideoPlayer instances
   final Map<int, VideoPlayer> _videoPlayers = <int, VideoPlayer>{};
 
@@ -90,9 +94,11 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
         'videoPlayer-$textureId', (int viewId) => videoElement);
 
     final VideoPlayer player = VideoPlayer(
-        videoElement: videoElement,
-        uri: uri,
-        headers: headers ?? Map<String, String>());
+      videoElement: videoElement,
+      uri: uri,
+      headers: headers ?? Map<String, String>(),
+      useNativeHls: useNativeHls,
+    );
 
     await player.initialize();
 

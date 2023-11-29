@@ -48,6 +48,7 @@ class VideoPlayer {
     required html.VideoElement videoElement,
     required this.uri,
     required this.headers,
+    required this.useNativeHls,
     @visibleForTesting StreamController<VideoEvent>? eventController,
   })  : _videoElement = videoElement,
         _eventController = eventController ?? StreamController<VideoEvent>();
@@ -57,6 +58,7 @@ class VideoPlayer {
   void Function(html.Event)? _onContextMenu;
   final String uri;
   final Map<String, String> headers;
+  final bool? useNativeHls;
 
   bool _isInitialized = false;
   bool _isBuffering = false;
@@ -370,7 +372,7 @@ class VideoPlayer {
   }
 
   Future<bool> shouldUseHlsLibrary() async {
-    return isSupported() &&
+    return useNativeHls != true && isSupported() &&
         (uri.toString().contains('m3u8') || await _testIfM3u8()) &&
         !canPlayHlsNatively();
   }
