@@ -155,4 +155,9 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
   /// Sets the audio mode to mix with other sources (ignored)
   @override
   Future<void> setMixWithOthers(bool mixWithOthers) => Future<void>.value();
+
+  @override
+  Future<void> setWebOptions(int textureId, VideoPlayerWebOptions options) {
+    return _player(textureId).setOptions(options);
+  }
 }
