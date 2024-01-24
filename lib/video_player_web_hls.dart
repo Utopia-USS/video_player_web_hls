@@ -166,4 +166,6 @@ class VideoPlayerPluginHls extends VideoPlayerPlatform {
   Future<void> setWebOptions(int textureId, VideoPlayerWebOptions options) {
     return _player(textureId).setOptions(options);
   }
+
+  void enterFullscreen(int textureId) => _player(textureId).enterFullscreen();
 }

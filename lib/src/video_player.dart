@@ -5,12 +5,12 @@
 import 'dart:async';
 import 'dart:html' as html;
 import 'dart:html';
+import 'dart:js';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:js/js.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:video_player_web_hls/hls.dart';
 import 'package:video_player_web_hls/no_script_tag_exception.dart';
@@ -388,6 +388,15 @@ class VideoPlayer {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  void enterFullscreen() {
+    final object = JsObject.fromBrowserObject(_videoElement);
+    if (object.hasProperty('webkitEnterFullscreen')) {
+      _videoElement.enterFullscreen();
+    } else if (object.hasProperty('requestFullscreen')) {
+      _videoElement.requestFullscreen();
     }
   }
 }
